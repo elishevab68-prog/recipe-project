@@ -1,7 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const recipeRoutes = require('./routes/recipeRoutes')
+const recipeRoutes = require('./routes/recipeRoutes');
+const { printMsg } = require('./middlewares/recipes.middleware');
 const app = express();
 
 
@@ -10,8 +11,11 @@ dotenv.config();
 app.use(express.json());
 
 connectDB();
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/recipes', recipeRoutes);
+app.use(printMsg);
+
 
 app.get('/', (req, res) => {
   res.send('Recipe Sharing Platform API is running...');
