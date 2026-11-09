@@ -9,6 +9,19 @@ const getAllRecipes = async (req, res) => {
   }
 };
 
+const getRecipeById = async (req, res) => {
+  try{
+    const recipeId = req.params.id;
+    const recipe = await Recipe.findById(recipeId);
+    if(!recipe){
+      return res.status(404).json({  message:"The recipe does not exist on the web"})
+    }
+    return res.status(200).json(recipe);
+
+  }catch(err){
+    return res.status(500).json({  title:"שגיאת שרת",message:err.message})
+  }
+}
 
 
 const deleteRecipe = async (req, res) => {
