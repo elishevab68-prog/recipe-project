@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { getAllRecipes } = require('../controllers/recipeController');
-const {createRecipe}=require('../controllers/recipeController')
-const { deleteRecipe } = require('../controllers/recipeController');
-const {getRecipeById}=require('../controllers/recipeController')
+const { getAllRecipes } = require('../controllers/recipeController.js');
+const { createRecipe } = require('../controllers/recipeController.js');
+const { deleteRecipe } = require('../controllers/recipeController.js');
+const { getRecipeById } = require('../controllers/recipeController.js');
+
+const { validate } = require('../middlewares/recipes.middleware.js'); 
+const { recipeValidationSchema } = require('../validations/recipeValidation.js');
 
 router.get('/', getAllRecipes);
-router.post('/', createRecipe);
+router.post('/', validate(recipeValidationSchema), createRecipe); 
 router.delete('/:id', deleteRecipe);
-router.get('/:id' , getRecipeById)
-
+router.get('/:id', getRecipeById);
 
 module.exports = router;
