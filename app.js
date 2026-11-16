@@ -4,6 +4,8 @@ const connectDB = require('./config/db');
 const recipeRoutes = require('./routes/recipeRoutes');
 const userRoutes = require('./routes/userRoutes');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+const logger = require('./middlewares/logger');
+const app = express();
 
 
 dotenv.config();
@@ -16,6 +18,7 @@ app.use(errorMiddleware);
 connectDB();
 app.use(express.urlencoded({ extended: true }));
 
+app.use(logger);
 app.use('/recipes', recipeRoutes);
 app.use('/users', userRoutes);
 
