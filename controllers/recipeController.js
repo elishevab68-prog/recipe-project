@@ -40,7 +40,10 @@ const deleteRecipe = async (req, res,next) => {
     }
 };
 
-const createRecipe = async (req, res,next) => {
+
+
+
+const createRecipe = async (req, res) => {
   try {
     const newRecipe = await Recipe.create(req.body);
     res.status(201).json(newRecipe);
