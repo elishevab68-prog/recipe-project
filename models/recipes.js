@@ -29,10 +29,20 @@ const recipeSchema = new mongoose.Schema({
     enum: ['פתיחה', 'עיקרי', 'אחרונה'] 
   },
   
+  CreateBy: {
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User',
+    required:true//מתכון חייב להיות משוייך למשתמש
+  },
+
   Image:{
-    type: String    
+    type: String, 
+    trim: true,
+    default: ''  
   }
 
+},{
+  timestamps: true
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
