@@ -1,9 +1,18 @@
-const printMsg = (req, res, next) => {
-    //כך מעבירים מידע למידלוור הבא
-    req.myDate = new Date();
-    req.userName = "admin";
-    console.log(`hello ${req.url}`);
-    next();
+const validate = (schema) => {
+    return (req, res, next) => {
+        const { error } = schema.validate(req.body);
+        
+        if (error) {
+            return res.status(400).json({
+                message: "Validation error",
+                details: error.details[0].message
+            });
+        }
+        
+        next();
+    };
 };
 
-module.exports = { printMsg };
+module.exports = {
+    validate
+};
