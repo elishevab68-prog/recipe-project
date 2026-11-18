@@ -1,13 +1,12 @@
+const errorHandler = require('./middlewares/errorHandler');
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const recipeRoutes = require('./routes/recipeRoutes');
 const userRoutes = require('./routes/userRoutes');
-const errorMiddleware = require('./middlewares/errorMiddleware');
 const logger = require('./middlewares/logger');
 
 dotenv.config();
-connectDB();
 
 const app = express();
 
@@ -19,13 +18,21 @@ app.get('/', (req, res) => {
   res.send('Recipe Sharing Platform API is running...');
 });
 
-app.use('/api/users', userRoutes); 
+app.use('/api/users', userRoutes);
 app.use('/recipes', recipeRoutes);
 
-app.use(errorMiddleware);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+const startServer = async () => {
+  await connectDB();
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+};
+
+startServer().catch((error) => {
+  console.error(`Unable to start server: ${error.message}`);
+  process.exitCode = 1;
 });
