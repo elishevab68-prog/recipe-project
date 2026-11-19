@@ -14,9 +14,22 @@ const recipeSchema = new mongoose.Schema({
   },
   
   Ingredients:{
-    type: [String],  
+    type: [{
+      name: {
+        type: String,
+        required: true
+      },
+      amount: {
+        type: Number,
+        required: true
+      },
+      unit: {
+        type: String,
+        required: true
+      }
+    }],  
     required: true    
-  },
+},
   
   PrepTime:{
     type: Number,    
@@ -40,10 +53,11 @@ const recipeSchema = new mongoose.Schema({
     trim: true,
     default: ''  
   }
+},
 
-},{
-  timestamps: true
-});
+  {
+    timestamps: true
+  });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
 

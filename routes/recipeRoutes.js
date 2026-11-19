@@ -6,6 +6,7 @@ const {
   getRecipeById,
   createRecipe,
   deleteRecipe,
+  updateRecipe,
   searchRecipes,
   updateRecipeIngredients,
   getRecipesByUser
@@ -25,6 +26,7 @@ router.get('/', getAllRecipes);
 router.post('/', validate(recipeValidationSchema, 'body'), createRecipe);
 router.patch('/:id/ingredients', validate(updateIngredientsSchema, 'body'), updateRecipeIngredients);
 router.get('/:id', getRecipeById);
+router.put('/:id', validate(recipeValidationSchema, 'body'), updateRecipe);
 router.delete('/:id', deleteRecipe);
 
 module.exports = router;
