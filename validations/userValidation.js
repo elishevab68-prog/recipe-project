@@ -6,6 +6,12 @@ const userValidationSchema = Joi.object({
     Password: Joi.string().required()
 });
 
+const loginValidationSchema = Joi.object({
+    Email: Joi.string().email().required(),
+    Password: Joi.string().required()
+});
+
 module.exports = {
-    userValidationSchema
+    userValidationSchema,
+    loginValidationSchema
 };
